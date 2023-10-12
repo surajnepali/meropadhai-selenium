@@ -6,3 +6,4 @@ clinchtech/pageobjects/HomePage.class
 clinchtech/pageobjects/LoginPage.class
 clinchtech/pageobjects/ExplorePage.class
 clinchtech/pageobjects/LandingPage.class
+clinchtech/resources/ExtentReporterNG.class

@@ -1,3 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "testng.useProjectFile": true,
+    "testng.projectFilePath": "meropadhai/test-resources/testng.xml"
 }

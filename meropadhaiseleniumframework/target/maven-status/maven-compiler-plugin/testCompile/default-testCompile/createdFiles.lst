@@ -1,3 +1,7 @@
 clinchtech/TestComponents/BaseTest.class
-clinchtech/Tests/StandAloneTest.class
+clinchtech/TestComponents/Listeners.class
+clinchtech/Data/DataReader.class
 clinchtech/Tests/BuyCourse.class
+clinchtech/Tests/StandAloneTest.class
+clinchtech/TestComponents/BaseTest$1.class
+clinchtech/Data/DataReader$1.class
