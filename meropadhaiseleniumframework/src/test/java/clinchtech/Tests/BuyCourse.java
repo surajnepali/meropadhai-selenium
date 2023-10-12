@@ -1,9 +1,16 @@
 package clinchtech.Tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+// import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import clinchtech.TestComponents.BaseTest;
@@ -16,13 +23,15 @@ import clinchtech.pageobjects.LoginPage;
 
 public class BuyCourse extends BaseTest{
     
-    @Test
-    public void buyCourse() throws IOException, InterruptedException {
+    @Test(dataProvider = "getData")
+    // While using HashMap, it should be
+    // public void buyCourse(HashMap<String, String>) throws IOException, InterruptedException{
+    public void buyCourse(String email, String password, String courseString) throws IOException, InterruptedException {
         
-        LandingPage landingPage = launchApplication();
+        LandingPage landingPage = new LandingPage(driver);
         landingPage.goToLoginPage();
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("surajclinchtech@gmail.com", "12345678");
+        loginPage.login(email, password);
         
         HomePage homePage = new HomePage(driver);
         String actualText = homePage.verifyPage();
@@ -33,7 +42,7 @@ public class BuyCourse extends BaseTest{
         
         ExplorePage explorePage = new ExplorePage(driver);
 
-        final String course = explorePage.seeCourseDetails("Network Programming", 0, 1600);
+        final String course = explorePage.seeCourseDetails(courseString, 0, 1600);
 
         CourseDetails courseDetails = new CourseDetails(driver);
         Assert.assertEquals(courseDetails.getCourseTitle(5), course);
@@ -51,6 +60,40 @@ public class BuyCourse extends BaseTest{
         System.out.println(cartCourseNamesList);
         System.out.println(cartCoursePricesList);
 
+    }
+
+    @DataProvider
+    public Object[][] getData(){
+
+        // This his how Hashing is done in Java (This HashMap was created manually)
+
+        // HashMap<String, String> map = new HashMap<String, String>();
+        // map.put("email", "surajnepali7896@gmail.com");
+        // map.put("password", "12345678");
+        // map.put("courseStrings", "Network Programming");
+
+        // HashMap<String, String> map1 = new HashMap<String, String>();
+        // map1.put("email", "surajclinchtech@gmail.com");
+        // map1.put("password", "12345678");
+        // map1.put("courseStrings", "Network Programming");
+
+        // While using HashMap, it should return
+        // return new Object[][] {{map}, {map1}};
+
+        return new Object[][] {{"surajnepali7896@gmail.com", "12345678", "Network Programming"}, {"surajclinchtech@gmail.com", "12345678", "Network Programming"}};
+    }
+
+    // @DataProvider
+    // public Object[][] getData1() throws IOException{
+    //     List<HashMap<String, String>> data = getJsonDataToMap(System.getProperty("user.dir") + "///src//test//java//clinchtech//Data//buyCourse.json");
+    //     return new Object[][] {{data.get(0)}, {data.get(1)}};
+    // }
+
+    public void getScreenshot(String testCaseName) throws IOException{
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+        FileUtils.copyFile(source, file);
     }
 
 }
